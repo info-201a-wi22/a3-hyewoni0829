@@ -21,7 +21,13 @@ summary(cars)
 
 ## Trends over time
 
-You can also embed plots, for example:
+This graph was created to look at population trends for each race from 1987 to 2018.
+-Red: Asian American
+- Blue: White
+-Yellow: Black
+-Green: Latin
+Latinos and Asian Americans make up very little of this graph. Since 2000, the black jail population has been decreasing while the white jail population has been increasing.
+
 
 ```{r plot_line, echo=FALSE}
 incarceration <- read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
@@ -50,14 +56,15 @@ ggplot(df2, aes(x=year)) +
   geom_line(aes(y= black_jail_sum), color="yellow") +
   geom_line(aes(y= latinx_jail_sum), color="green")+
   scale_y_continuous(labels = scales::comma) +
-  ggtitle("Population for each races from 1987-2018")+
+  ggtitle("Population for each race from 1987-2018")+
   xlab("Year") +
   ylab("Race") 
 ```
 
-## black population vs White population
+## black jail population vs White jail population
 
-You can also embed plots, for example:
+This graph was created to examine the relationship between the white prison population and the black prison population in 2018. If you look at the graph, you can see that the graph is increasing positively. In other words, if the population of white prisons increases, so will the population of black prisons. This means that we cannot see racism when they are incarcerated.
+
 
 ```{r plot_scatter, echo=FALSE}
 df <- df %>%
@@ -78,7 +85,7 @@ ggplot(df, aes(x=white_trend_2018, y=black_trend_2018)) +
        y ="Black jail population  in 2018")
 
 ```
-## black population map
+## black jail population map
 
 You can also embed plots, for example:
 
