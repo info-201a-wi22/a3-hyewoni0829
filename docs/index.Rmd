@@ -87,7 +87,7 @@ ggplot(df, aes(x=white_trend_2018, y=black_trend_2018)) +
 ```
 ## black jail population map
 
-You can also embed plots, for example:
+This map was created to show the distribution of the black jail population since 1990. Blacks tend to be imprisoned in the southwest and southeast areas. This suggests that there may be more black incarceration and injustice in this area.
 
 ```{r plot_map, echo=FALSE}
 library("tidyverse")
