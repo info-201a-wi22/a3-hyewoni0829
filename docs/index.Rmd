@@ -84,9 +84,11 @@ ggplot(df, aes(x=white_trend_2018, y=black_trend_2018)) +
 
 ```
 
+
 ## Black jail population map
 
 This map was created to see the distribution of the number of the White jail population since 1990. White people tend to be incarcerated in the South Western area, and the South East area. This suggests that there may be more White incarceration in this area.
+
 
 ```{r plot_map, echo=FALSE}
 library("tidyverse")
