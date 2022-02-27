@@ -16,10 +16,6 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 Since 1970, 192,596 Asian Americans have been imprisoned in the United States, 7,891,239 Blacks, 3,220,014 Latino Americans, and 8,814,789 Whites. According to this calculation, Black and White people had the largest proportion of incarceration. The highest average jail population took place with Black and White people. The average number of population for these top two races were 81.18 for Black people, and 90.67 for White people. The highest number of population for these top two races were 13,143.9 for Black people, and 7,036.6 for White people. The highest number of populations occurred in California. Over the last 30 years, there was a huge change in the number of Black and White jail populations. There were 197,089 more White people incarcerated in 2018 than in 1988, and 108,122 Black people incarcerated.
 
 
-```{r cars}
-summary(cars)
-```
-
 ## Trends over time
 
 This graph was made to see the population trends for each race from 1987-2018. 
@@ -63,7 +59,7 @@ ggplot(df2, aes(x=year)) +
   ylab("Race") 
 ```
 
-## black jail population vs White jail population
+## Black jail population vs White jail population
 
 This graph was created to examine the relationship between the White prison population and the Black prison population in 2018. If you look at the graph, you can see that the graph is increasing positively. In other words, if the population of White prisoners increases, so will the population of Black prisoners. This means that people cannot see racism when they are incarcerated.
 
@@ -87,7 +83,8 @@ ggplot(df, aes(x=white_trend_2018, y=black_trend_2018)) +
        y ="Black jail population  in 2018")
 
 ```
-## black jail population map
+
+## Black jail population map
 
 This map was created to see the distribution of the number of the White jail population since 1990. White people tend to be incarcerated in the South Western area, and the South East area. This suggests that there may be more White incarceration in this area.
 
