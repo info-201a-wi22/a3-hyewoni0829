@@ -1,0 +1,141 @@
+---
+title: "Incarceration Report"
+author: "Hyewon Sim"
+data: "2/25/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+## Summary
+
+
+Since 1970, 192,596 Asian Americans have been imprisoned in the United States, 7,891,239 Blacks, 3,220,014 Latino Americans, and 8,814,789 Whites. According to this calculation, Black and White people had the largest proportion of incarceration. The highest average jail population took place with Black and White people. The average number of population for these top two races were 81.18 for Black people, and 90.67 for White people. The highest number of population for these top two races were 13,143.9 for Black people, and 7,036.6 for White people. The highest number of populations occurred in California. Over the last 30 years, there was a huge change in the number of Black and White jail populations. There were 197,089 more White people incarcerated in 2018 than in 1988, and 108,122 Black people incarcerated.
+
+
+## Trends over time
+
+This graph was made to see the population trends for each race from 1987-2018. 
+-Red: Asian American
+-Blue: White
+-Yellow: black
+-Green: Latinx
+Latinx and Asian Americans take up a small portion of this graph. Since 2000, the number of Black people in jail has decreased, while the number of White people in jail has increased.
+
+
+
+```{r plot_line, echo=FALSE}
+incarceration <- read.csv("https://raw.githubusercontent.com/vera-institute/incarceration-trends/master/incarceration_trends.csv")
+
+library(dplyr)
+library(ggplot2)
+
+df <- incarceration %>%
+  select(yfips, year, state, total_pop, urbanicity, total_jail_pop, aapi_jail_pop, black_jail_pop, latinx_jail_pop, white_jail_pop) 
+
+df2 <- incarceration %>%
+  filter(year >=1987) %>%
+  select(year,total_jail_pop, aapi_jail_pop,black_jail_pop, white_jail_pop,latinx_jail_pop) %>%
+  group_by(year) %>%
+  summarise(
+    black_jail_sum =sum(black_jail_pop, na.rm =TRUE),
+    white_jail_sum =sum(white_jail_pop, na.rm =TRUE),
+    aapi_jail_sum =sum(aapi_jail_pop, na.rm =TRUE),
+    latinx_jail_sum= sum(latinx_jail_pop, na.rm =TRUE)
+  )
+
+
+ggplot(df2, aes(x=year)) + 
+  geom_line(aes(y = aapi_jail_sum), color = "red") + 
+  geom_line(aes(y = white_jail_sum), color="blue") +
+  geom_line(aes(y= black_jail_sum), color="yellow") +
+  geom_line(aes(y= latinx_jail_sum), color="green")+
+  scale_y_continuous(labels = scales::comma) +
+  ggtitle("Population for each race from 1987-2018")+
+  xlab("Year") +
+  ylab("Race") 
+```
+
+## black jail population vs White jail population
+
+This graph was created to examine the relationship between the White prison population and the Black prison population in 2018. If you look at the graph, you can see that the graph is increasing positively. In other words, if the population of White prisoners increases, so will the population of Black prisoners. This means that people cannot see racism when they are incarcerated.
+
+
+```{r plot_scatter, echo=FALSE}
+df <- df %>%
+  group_by(year) %>%
+  filter(year == 2018) %>%
+  mutate(white_trend_2018 = white_jail_pop)
+df <- df %>%
+  group_by(year) %>%
+  filter(year == 2018) %>%
+  mutate(black_trend_2018 = black_jail_pop)
+
+
+ggplot(df, aes(x=white_trend_2018, y=black_trend_2018)) +
+  geom_point () +
+  geom_smooth(method = lm, formula = y ~ splines::bs(x, 3), se = FALSE) +
+  labs(title = "White pop vs Black pop in 2018",
+       x = "White jail population in 2018",
+       y ="Black jail population  in 2018")
+
+```
+
+## black jail population map
+
+This map was created to see the distribution of the number of the White jail population since 1990. White people tend to be incarcerated in the South Western area, and the South East area. This suggests that there may be more White incarceration in this area.
+
+```{r plot_map, echo=FALSE}
+library("tidyverse")
+library("maps")
+library("mapproj")
+library("usdata")
+library("patchwork")
+
+incarceration <- na.omit(incarceration)  
+
+white_jail <-incarceration %>%
+  filter(year >= "1990", na.rm = TRUE) %>%
+  select(white_jail_pop, fips)
+
+
+county_shape <- map_data("county") %>%
+  unite(polyname, region, subregion, sep = ",",na.rm = TRUE) %>%
+  left_join(county.fips, by="polyname", na.rm=TRUE)
+
+
+
+map_data <- county_shape %>%
+  left_join(white_jail, by="fips", na.rm = TRUE) 
+
+
+blank_theme <- theme_bw() +
+  theme(
+    axis.line = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.title = element_blank(),
+    plot.background = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank()
+  )
+
+ggplot(map_data) +
+  geom_polygon(aes(x=long, y= lat, group= group, fill = white_jail_pop),
+               color = "black",
+               size = 0.3
+  ) +
+  scale_fill_continuous(limits = c(0, max(map_data$white_jail_pop)), na.value = "gray", low = "yellow", high ="red") +
+  coord_map() +
+  labs(fill = "population") +
+  blank_theme +
+  ggtitle("Black Jail Population since 1990")
+
+
+
+
+```
