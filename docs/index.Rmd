@@ -7,13 +7,14 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 ```
 
 ## Summary
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Since 1970, 192,596 Asian Americans have been imprisoned in the United States, 7,891,239 Blacks, 3,220,014 Latino Americans, and 8,814,789 Whites. According to this calculation, Black and White people had the largest proportion of incarceration. The highest average jail population took place with Black and White people. The average number of population for these top two races were 81.18 for Black people, and 90.67 for White people. The highest number of population for these top two races were 13,143.9 for Black people, and 7,036.6 for White people. The highest number of populations occurred in California. Over the last 30 years, there was a huge change in the number of Black and White jail populations. There were 197,089 more White people incarcerated in 2018 than in 1988, and 108,122 Black people incarcerated.
+
 
 ```{r cars}
 summary(cars)
@@ -21,12 +22,13 @@ summary(cars)
 
 ## Trends over time
 
-This graph was created to look at population trends for each race from 1987 to 2018.
+This graph was made to see the population trends for each race from 1987-2018. 
 -Red: Asian American
-- Blue: White
--Yellow: Black
--Green: Latin
-Latinos and Asian Americans make up very little of this graph. Since 2000, the black jail population has been decreasing while the white jail population has been increasing.
+-Blue: White
+-Yellow: black
+-Green: Latinx
+Latinx and Asian Americans take up a small portion of this graph. Since 2000, the number of Black people in jail has decreased, while the number of White people in jail has increased.
+
 
 
 ```{r plot_line, echo=FALSE}
@@ -63,7 +65,7 @@ ggplot(df2, aes(x=year)) +
 
 ## black jail population vs White jail population
 
-This graph was created to examine the relationship between the white prison population and the black prison population in 2018. If you look at the graph, you can see that the graph is increasing positively. In other words, if the population of white prisons increases, so will the population of black prisons. This means that we cannot see racism when they are incarcerated.
+This graph was created to examine the relationship between the White prison population and the Black prison population in 2018. If you look at the graph, you can see that the graph is increasing positively. In other words, if the population of White prisoners increases, so will the population of Black prisoners. This means that people cannot see racism when they are incarcerated.
 
 
 ```{r plot_scatter, echo=FALSE}
@@ -87,7 +89,7 @@ ggplot(df, aes(x=white_trend_2018, y=black_trend_2018)) +
 ```
 ## black jail population map
 
-This map was created to show the distribution of the black jail population since 1990. Blacks tend to be imprisoned in the southwest and southeast areas. This suggests that there may be more black incarceration and injustice in this area.
+This map was created to see the distribution of the number of the White jail population since 1990. White people tend to be incarcerated in the South Western area, and the South East area. This suggests that there may be more White incarceration in this area.
 
 ```{r plot_map, echo=FALSE}
 library("tidyverse")
