@@ -6,7 +6,8 @@ library(ggplot2)
 df <- incarceration %>%
   select(yfips, year, state, total_pop, urbanicity, total_jail_pop, aapi_jail_pop, black_jail_pop, latinx_jail_pop, white_jail_pop) 
 
-#1 
+#part I Summary
+#1 What is the proportion of the jail population for each race?
 sum_total_jail_pop <- round(sum(df$total_jail_pop, na.rm = TRUE))
 
 total_aapi <- round(sum(df$aapi_jail_pop, na.rm = TRUE))
@@ -22,13 +23,13 @@ total_white <-round(sum(df$white_jail_pop, na.rm =TRUE))
 prop_white <- round(total_white/sum_total_jail_pop, 3)
 
 
-#2
+#2 What is the average of the jail population for each race?
 avg_aapi <- round(mean(df$aapi_jail_pop,na.rm = TRUE),2)
 avg_black <- round(mean(df$black_jail_pop, na.rm = TRUE),2)
 avg_latinx <- round(mean(df$latinx_jail_pop, na.rm = TRUE), 2)
 avg_white <- round(mean(df$white_jail_pop, na.rm = TRUE),2)
 
-#3
+#3 What is the highest jail population for each race?
 highest_aapi <- df %>%
   filter(aapi_jail_pop == max(aapi_jail_pop, na.rm =TRUE)) %>%
   pull (aapi_jail_pop)
@@ -41,7 +42,8 @@ highest_latinx <- df %>%
 highest_white <- df %>%
   filter(white_jail_pop == max(white_jail_pop, na.rm =TRUE)) %>%
   pull (white_jail_pop)
-#4
+
+#4 Which state had the highest number of the jail population in each race?
 highest_aapi_state <- df %>%
   filter(aapi_jail_pop == max(aapi_jail_pop, na.rm =TRUE)) %>%
   pull (state)
@@ -55,7 +57,7 @@ highest_white_state <- df %>%
   filter(white_jail_pop == max(white_jail_pop, na.rm =TRUE)) %>%
   pull (state)
 
-#5
+#5 How much has my variable change over the last 30 years?
 aapi_pop_1988 <- df %>%
   group_by(year) %>%
   filter(year == 1988) %>%
@@ -91,7 +93,7 @@ latinx_pop_2018 <- df %>%
   summarize(latinx_total_pop_2018 = round(sum(latinx_jail_pop, na.rm = TRUE))) %>%
   pull(latinx_total_pop_2018)
 change_latinx_jail_pop_10yr <- (latinx_pop_2018 - latinx_pop_1988)
-  
+
 white_pop_1988 <- df %>%
   group_by(year) %>%
   filter(year == 1988) %>%
@@ -105,7 +107,7 @@ white_pop_2018 <- df %>%
 change_white_jail_pop_10yr <- (white_pop_2018 - white_pop_1988)
 
 
-# Part II
+# Part II jail population for each race from 1987-2018
 df2 <- incarceration %>%
   filter(year >=1987) %>%
   select(year,total_jail_pop, aapi_jail_pop,black_jail_pop, white_jail_pop,latinx_jail_pop) %>%
@@ -124,11 +126,11 @@ ggplot(df2, aes(x=year)) +
   geom_line(aes(y= black_jail_sum), color="yellow") +
   geom_line(aes(y= latinx_jail_sum), color="green")+
   scale_y_continuous(labels = scales::comma) +
-  ggtitle("Population for each races from 1987-2018")+
+  ggtitle("Population for each race from 1987-2018")+
   xlab("Year") +
   ylab("Race") 
 
-# part III
+# part III the relationship between the black jail population and the white jail population 
 df <- df %>%
   group_by(year) %>%
   filter(year == 2018) %>%
@@ -146,7 +148,9 @@ ggplot(df, aes(x=white_trend_2018, y=black_trend_2018)) +
        x = "White jail population in 2018",
        y ="Black jail population  in 2018")
 
-# part 4
+# part 4 map
+# White jail population map since 1990
+
 #install.packages("mapproj")
 #install.packages("usdata")
 #install.packages("patchwork")
@@ -195,6 +199,3 @@ ggplot(map_data) +
   labs(fill = "population") +
   blank_theme +
   ggtitle("Black Jail Population since 1990")
-
-
-
