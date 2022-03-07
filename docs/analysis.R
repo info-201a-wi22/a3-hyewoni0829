@@ -198,4 +198,5 @@ ggplot(map_data) +
   coord_map() +
   labs(fill = "population") +
   blank_theme +
+
   ggtitle("Black Jail Population since 1990")
