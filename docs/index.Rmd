@@ -1,5 +1,5 @@
 ---
-title: "Incarceration Report"
+title: "Incarceration Report(Assignment 3)"
 author: "Hyewon Sim"
 data: "2/25/2022"
 output: html_document
@@ -19,10 +19,15 @@ Since 1970, 192,596 Asian Americans have been imprisoned in the United States, 7
 ## Trends over time
 
 This graph was made to see the population trends for each race from 1987-2018. 
+
 -Red: Asian American
+
 -Blue: White
+
 -Yellow: black
+
 -Green: Latinx
+
 Latinx and Asian Americans take up a small portion of this graph. Since 2000, the number of Black people in jail has decreased, while the number of White people in jail has increased.
 
 
